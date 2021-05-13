@@ -11,12 +11,12 @@ class PublicKey
     /** @var resource */
     protected $publicKey;
 
-    public static function fromString(string $publicKeyString): self
+    public static function fromString(string $publicKeyString)
     {
         return new static($publicKeyString);
     }
 
-    public static function fromFile(string $pathToPublicKey): self
+    public static function fromFile(string $pathToPublicKey)
     {
         if (! file_exists($pathToPublicKey)) {
             throw FileDoesNotExist::make($pathToPublicKey);
@@ -43,7 +43,7 @@ class PublicKey
         return $encrypted;
     }
 
-    public function canDecrypt(string $data): bool
+    public function canDecrypt(string $data)
     {
         try {
             $this->decrypt($data);
@@ -54,7 +54,7 @@ class PublicKey
         return true;
     }
 
-    public function decrypt(string $data): string
+    public function decrypt(string $data)
     {
         openssl_public_decrypt($data, $decrypted, $this->publicKey, OPENSSL_PKCS1_PADDING);
 
@@ -65,7 +65,7 @@ class PublicKey
         return $decrypted;
     }
 
-    public function details(): array
+    public function details()
     {
         return openssl_pkey_get_details($this->publicKey);
     }

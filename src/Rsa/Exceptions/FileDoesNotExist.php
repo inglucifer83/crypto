@@ -6,7 +6,7 @@ use Exception;
 
 class FileDoesNotExist extends Exception
 {
-    public static function make(string $path): self
+    public static function make(string $path)
     {
         return new self("There is no file at path: `{$path}`.");
     }

@@ -11,12 +11,12 @@ class PrivateKey
     /** @var resource */
     protected $privateKey;
 
-    public static function fromString(string $privateKeyString, string $password = null): self
+    public static function fromString(string $privateKeyString, string $password = null)
     {
         return new static($privateKeyString, $password);
     }
 
-    public static function fromFile(string $pathToPrivateKey, string $password = null): self
+    public static function fromFile(string $pathToPrivateKey, string $password = null)
     {
         if (! file_exists($pathToPrivateKey)) {
             throw FileDoesNotExist::make($pathToPrivateKey);
@@ -36,14 +36,14 @@ class PrivateKey
         }
     }
 
-    public function encrypt(string $data): string
+    public function encrypt(string $data)
     {
         openssl_private_encrypt($data, $decrypted, $this->privateKey, OPENSSL_PKCS1_PADDING);
 
         return $decrypted;
     }
 
-    public function canDecrypt(string $data): bool
+    public function canDecrypt(string $data)
     {
         try {
             $this->decrypt($data);
@@ -54,7 +54,7 @@ class PrivateKey
         return true;
     }
 
-    public function decrypt(string $data): string
+    public function decrypt(string $data)
     {
         openssl_private_decrypt($data, $decrypted, $this->privateKey, OPENSSL_PKCS1_OAEP_PADDING);
 
@@ -65,7 +65,7 @@ class PrivateKey
         return $decrypted;
     }
 
-    public function details(): array
+    public function details()
     {
         return openssl_pkey_get_details($this->privateKey);
     }

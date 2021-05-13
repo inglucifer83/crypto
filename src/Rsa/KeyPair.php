@@ -4,23 +4,23 @@ namespace Spatie\Crypto\Rsa;
 
 class KeyPair
 {
-    protected string $digestAlgorithm;
-    protected int $privateKeyBits;
-    protected int $privateKeyType;
+    protected $digestAlgorithm;
+    protected $privateKeyBits;
+    protected $privateKeyType;
 
-    private ?string $password = null;
+    private $password = null;
 
     public function __construct(
-        string $digestAlgorithm = OPENSSL_ALGO_SHA512,
-        int $privateKeyBits = 4096,
-        int $privateKeyType = OPENSSL_KEYTYPE_RSA
+        $digestAlgorithm = OPENSSL_ALGO_SHA512,
+        $privateKeyBits = 4096,
+        $privateKeyType = OPENSSL_KEYTYPE_RSA
     ) {
         $this->privateKeyType = $privateKeyType;
         $this->privateKeyBits = $privateKeyBits;
         $this->digestAlgorithm = $digestAlgorithm;
     }
 
-    public function password(string $password = null): self
+    public function password($password = null)
     {
         $this->password = $password;
 
@@ -28,9 +28,9 @@ class KeyPair
     }
 
     public function generate(
-        string $privateKeyPath = '',
-        string $publicKeyPath = ''
-    ): array {
+        $privateKeyPath = '',
+        $publicKeyPath = ''
+    ) {
         /** @var \OpenSSLAsymmetricKey $asymmetricKey */
         $asymmetricKey = openssl_pkey_new([
             "digest_alg" => $this->digestAlgorithm,

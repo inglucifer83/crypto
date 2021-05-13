@@ -6,7 +6,7 @@ use Exception;
 
 class InvalidPrivateKey extends Exception
 {
-    public static function make(): self
+    public static function make()
     {
         return new self('This does not seem to be a valid private key.');
     }
